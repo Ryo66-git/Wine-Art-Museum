@@ -118,93 +118,144 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* Gallery - Horizontal Scrolling */}
+      {/* Gallery - Two Column Reverse Scrolling */}
       {wineLabels.length > 0 && (
-        <div className="pt-16 sm:pt-20 md:pt-24 pb-2 sm:pb-4 md:pb-8 h-screen flex flex-col">
-          {/* Scrolling Gallery Container */}
-          <div className="relative overflow-hidden flex-1 flex items-center min-h-0">
-            <div className="flex animate-scroll">
-              {/* First set of images */}
-              {wineLabels.map((label, index) => (
-                <motion.div
-                  key={`first-${label.id}`}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: index * 0.1,
-                    ease: [0.25, 0.1, 0.25, 1]
-                  }}
-                  className="flex-shrink-0 w-[180px] sm:w-[250px] md:w-[300px] lg:w-[350px] mx-1.5 sm:mx-2 md:mx-3 cursor-pointer group touch-manipulation"
-                  onClick={() => setSelectedImage(label)}
-                >
-                  <div className="relative h-[180px] sm:h-[280px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
-                    <Image
-                      src={label.imageUrl}
-                      alt={formatPrompt(label.prompt)}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105"
-                      unoptimized
-                      priority={index < 3}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 transform translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500">
-                      <p className="text-white/90 font-serif text-[10px] sm:text-xs italic leading-relaxed">
-                        {formatPrompt(label.prompt)}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-              {/* Duplicate set for seamless loop */}
-              {wineLabels.map((label, index) => (
-                <motion.div
-                  key={`second-${label.id}`}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: (wineLabels.length + index) * 0.1,
-                    ease: [0.25, 0.1, 0.25, 1]
-                  }}
-                  className="flex-shrink-0 w-[180px] sm:w-[250px] md:w-[300px] lg:w-[350px] mx-1.5 sm:mx-2 md:mx-3 cursor-pointer group touch-manipulation"
-                  onClick={() => setSelectedImage(label)}
-                >
-                  <div className="relative h-[180px] sm:h-[280px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
-                    <Image
-                      src={label.imageUrl}
-                      alt={formatPrompt(label.prompt)}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105"
-                      unoptimized
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 transform translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500">
-                      <p className="text-white/90 font-serif text-[10px] sm:text-xs italic leading-relaxed">
-                        {formatPrompt(label.prompt)}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Generate Button - Below Gallery */}
+        <div className="pt-12 sm:pt-16 md:pt-20 pb-2 sm:pb-4 md:pb-8 h-screen flex flex-col">
+          {/* Generate Button - Above Gallery */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex justify-center mt-2 sm:mt-3 md:mt-4 mb-2 sm:mb-3 md:mb-4 px-4 flex-shrink-0"
+            className="flex justify-center mb-2 sm:mb-3 md:mb-4 px-4 flex-shrink-0"
           >
             <button
               onClick={handleGenerate}
               disabled={isLoading}
-              className="min-h-[40px] sm:min-h-[44px] px-5 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 bg-white/5 active:bg-white/10 hover:bg-white/10 border border-white/10 hover:border-white/20 active:border-white/30 rounded-sm font-serif text-[10px] sm:text-[11px] md:text-xs lg:text-sm tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
+              className="min-h-[36px] sm:min-h-[40px] md:min-h-[44px] px-4 sm:px-5 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-3 lg:py-4 bg-white/5 active:bg-white/10 hover:bg-white/10 border border-white/10 hover:border-white/20 active:border-white/30 rounded-sm font-serif text-[9px] sm:text-[10px] md:text-[11px] lg:text-xs tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
             >
               {isLoading ? "Curating..." : "Curate New Piece"}
             </button>
           </motion.div>
+
+          {/* Two Column Scrolling Gallery Container */}
+          <div className="relative overflow-hidden flex-1 flex flex-col gap-2 sm:gap-3 md:gap-4 min-h-0">
+            {/* Top Row - Scrolls Left to Right */}
+            <div className="relative overflow-hidden flex-1 min-h-0">
+              <div className="flex animate-scroll-left h-full items-center">
+                {/* First set of images */}
+                {wineLabels.map((label, index) => (
+                  <motion.div
+                    key={`top-first-${label.id}`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: index * 0.05,
+                      ease: [0.25, 0.1, 0.25, 1]
+                    }}
+                    className="flex-shrink-0 w-[140px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
+                    onClick={() => setSelectedImage(label)}
+                  >
+                    <div className="relative h-[120px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                      <Image
+                        src={label.imageUrl}
+                        alt={formatPrompt(label.prompt)}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105"
+                        unoptimized
+                        priority={index < 2}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
+                    </div>
+                  </motion.div>
+                ))}
+                {/* Duplicate set for seamless loop */}
+                {wineLabels.map((label, index) => (
+                  <motion.div
+                    key={`top-second-${label.id}`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: (wineLabels.length + index) * 0.05,
+                      ease: [0.25, 0.1, 0.25, 1]
+                    }}
+                    className="flex-shrink-0 w-[140px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
+                    onClick={() => setSelectedImage(label)}
+                  >
+                    <div className="relative h-[120px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                      <Image
+                        src={label.imageUrl}
+                        alt={formatPrompt(label.prompt)}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105"
+                        unoptimized
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom Row - Scrolls Right to Left (Reverse) */}
+            <div className="relative overflow-hidden flex-1 min-h-0">
+              <div className="flex animate-scroll-right h-full items-center">
+                {/* First set of images */}
+                {wineLabels.map((label, index) => (
+                  <motion.div
+                    key={`bottom-first-${label.id}`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: index * 0.05,
+                      ease: [0.25, 0.1, 0.25, 1]
+                    }}
+                    className="flex-shrink-0 w-[140px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
+                    onClick={() => setSelectedImage(label)}
+                  >
+                    <div className="relative h-[120px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                      <Image
+                        src={label.imageUrl}
+                        alt={formatPrompt(label.prompt)}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105"
+                        unoptimized
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
+                    </div>
+                  </motion.div>
+                ))}
+                {/* Duplicate set for seamless loop */}
+                {wineLabels.map((label, index) => (
+                  <motion.div
+                    key={`bottom-second-${label.id}`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: (wineLabels.length + index) * 0.05,
+                      ease: [0.25, 0.1, 0.25, 1]
+                    }}
+                    className="flex-shrink-0 w-[140px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
+                    onClick={() => setSelectedImage(label)}
+                  >
+                    <div className="relative h-[120px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                      <Image
+                        src={label.imageUrl}
+                        alt={formatPrompt(label.prompt)}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105"
+                        unoptimized
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

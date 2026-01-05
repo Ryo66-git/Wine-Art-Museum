@@ -26,7 +26,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@keyframes scroll {
+@keyframes scroll-left {
   0% {
     transform: translateX(0);
   }
@@ -35,19 +35,36 @@ body {
   }
 }
 
-.animate-scroll {
-  animation: scroll 60s linear infinite;
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 60s linear infinite;
   display: flex;
   width: fit-content;
 }
 
-.animate-scroll:hover {
+.animate-scroll-right {
+  animation: scroll-right 60s linear infinite;
+  display: flex;
+  width: fit-content;
+}
+
+.animate-scroll-left:hover,
+.animate-scroll-right:hover {
   animation-play-state: paused;
 }
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-  .animate-scroll {
+  .animate-scroll-left,
+  .animate-scroll-right {
     animation-duration: 80s; /* Slower on mobile for better viewing */
   }
 }

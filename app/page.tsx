@@ -103,14 +103,14 @@ export default function Home() {
             className="fixed inset-0 flex flex-col items-center justify-center z-50 bg-black/90"
           >
             <motion.div
-              className="w-16 h-16 border-2 border-white/20 border-t-white/60 rounded-full mb-6"
+              className="w-12 h-12 sm:w-16 sm:h-16 border-2 border-white/20 border-t-white/60 rounded-full mb-4 sm:mb-6"
               animate={{ rotate: 360 }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
             />
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-white/50 font-serif text-lg italic tracking-wide"
+              className="text-white/50 font-serif text-sm sm:text-base md:text-lg italic tracking-wide px-4 text-center"
             >
               Artist is dreaming...
             </motion.p>
@@ -120,7 +120,7 @@ export default function Home() {
 
       {/* Gallery - Horizontal Scrolling */}
       {wineLabels.length > 0 && (
-        <div className="pt-24 pb-8 h-screen flex flex-col">
+        <div className="pt-20 sm:pt-24 pb-4 sm:pb-8 h-screen flex flex-col">
           {/* Scrolling Gallery Container */}
           <div className="relative overflow-hidden flex-1 flex items-center">
             <div className="flex animate-scroll">
@@ -135,21 +135,21 @@ export default function Home() {
                     delay: index * 0.1,
                     ease: [0.25, 0.1, 0.25, 1]
                   }}
-                  className="flex-shrink-0 w-[250px] md:w-[300px] lg:w-[350px] mx-2 md:mx-3 cursor-pointer group"
+                  className="flex-shrink-0 w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] mx-1.5 sm:mx-2 md:mx-3 cursor-pointer group touch-manipulation"
                   onClick={() => setSelectedImage(label)}
                 >
-                  <div className="relative h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 transition-all duration-500">
+                  <div className="relative h-[240px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                     <Image
                       src={label.imageUrl}
                       alt={formatPrompt(label.prompt)}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105"
                       unoptimized
                       priority={index < 3}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                      <p className="text-white/90 font-serif text-xs italic leading-relaxed">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 transform translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500">
+                      <p className="text-white/90 font-serif text-[10px] sm:text-xs italic leading-relaxed">
                         {formatPrompt(label.prompt)}
                       </p>
                     </div>
@@ -167,20 +167,20 @@ export default function Home() {
                     delay: (wineLabels.length + index) * 0.1,
                     ease: [0.25, 0.1, 0.25, 1]
                   }}
-                  className="flex-shrink-0 w-[250px] md:w-[300px] lg:w-[350px] mx-2 md:mx-3 cursor-pointer group"
+                  className="flex-shrink-0 w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] mx-1.5 sm:mx-2 md:mx-3 cursor-pointer group touch-manipulation"
                   onClick={() => setSelectedImage(label)}
                 >
-                  <div className="relative h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 transition-all duration-500">
+                  <div className="relative h-[240px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                     <Image
                       src={label.imageUrl}
                       alt={formatPrompt(label.prompt)}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105"
                       unoptimized
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                      <p className="text-white/90 font-serif text-xs italic leading-relaxed">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 transform translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500">
+                      <p className="text-white/90 font-serif text-[10px] sm:text-xs italic leading-relaxed">
                         {formatPrompt(label.prompt)}
                       </p>
                     </div>
@@ -195,12 +195,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex justify-center mt-4 mb-4"
+            className="flex justify-center mt-3 sm:mt-4 mb-3 sm:mb-4 px-4"
           >
             <button
               onClick={handleGenerate}
               disabled={isLoading}
-              className="px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-sm font-serif text-xs md:text-sm tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="min-h-[44px] px-6 sm:px-8 py-3 sm:py-4 bg-white/5 active:bg-white/10 hover:bg-white/10 border border-white/10 hover:border-white/20 active:border-white/30 rounded-sm font-serif text-[11px] sm:text-xs md:text-sm tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
             >
               {isLoading ? "Curating..." : "Curate New Piece"}
             </button>
@@ -210,14 +210,14 @@ export default function Home() {
 
       {/* Empty State */}
       {wineLabels.length === 0 && !isLoading && (
-        <div className="fixed inset-0 flex flex-col items-center justify-center">
+        <div className="fixed inset-0 flex flex-col items-center justify-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center px-4"
+            className="text-center w-full max-w-md"
           >
-            <p className="text-white/30 font-serif text-xl md:text-2xl italic tracking-wide mb-8">
+            <p className="text-white/30 font-serif text-lg sm:text-xl md:text-2xl italic tracking-wide mb-6 sm:mb-8">
               No pieces curated yet.
             </p>
             <motion.button
@@ -226,7 +226,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               onClick={handleGenerate}
               disabled={isLoading}
-              className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-sm font-serif text-sm tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="min-h-[44px] w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white/5 active:bg-white/10 hover:bg-white/10 border border-white/10 hover:border-white/20 active:border-white/30 rounded-sm font-serif text-xs sm:text-sm tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
             >
               {isLoading ? "Curating..." : "Curate New Piece"}
             </motion.button>
@@ -250,18 +250,22 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+              className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-8"
               onClick={() => setSelectedImage(null)}
             >
-              <div className="relative max-w-7xl max-h-[90vh] w-full h-full flex flex-col">
+              <div className="relative max-w-7xl max-h-[95vh] sm:max-h-[90vh] w-full h-full flex flex-col">
                 <button
-                  onClick={() => setSelectedImage(null)}
-                  className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/70 border border-white/10 rounded-full transition-all duration-300 group"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImage(null);
+                  }}
+                  className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 min-w-[44px] min-h-[44px] w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-black/70 active:bg-black/90 hover:bg-black/90 border border-white/20 rounded-full transition-all duration-300 group touch-manipulation"
+                  aria-label="Close"
                 >
-                  <X className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6 text-white/90 group-hover:text-white group-active:text-white transition-colors" />
                 </button>
                 
-                <div className="relative flex-1 flex items-center justify-center overflow-hidden">
+                <div className="relative flex-1 flex items-center justify-center overflow-hidden mt-8 sm:mt-0">
                   <Image
                     src={selectedImage.imageUrl}
                     alt={formatPrompt(selectedImage.prompt)}
@@ -276,9 +280,9 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="mt-6 text-center"
+                  className="mt-4 sm:mt-6 text-center px-4 pb-2 sm:pb-0"
                 >
-                  <p className="text-white/70 font-serif text-sm md:text-base italic leading-relaxed max-w-3xl mx-auto">
+                  <p className="text-white/70 font-serif text-xs sm:text-sm md:text-base italic leading-relaxed max-w-3xl mx-auto">
                     {formatPrompt(selectedImage.prompt)}
                   </p>
                 </motion.div>

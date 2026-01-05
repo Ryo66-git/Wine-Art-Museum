@@ -44,3 +44,16 @@ body {
 .animate-scroll:hover {
   animation-play-state: paused;
 }
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .animate-scroll {
+    animation-duration: 80s; /* Slower on mobile for better viewing */
+  }
+}
+
+/* Touch manipulation for better mobile performance */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}

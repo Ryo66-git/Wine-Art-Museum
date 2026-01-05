@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
@@ -16,6 +16,12 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<WineLabel | null>(null);
   const [headerVisible, setHeaderVisible] = useState(true);
+  const [isDragging, setIsDragging] = useState({ top: false, bottom: false });
+  const [dragStart, setDragStart] = useState({ x: 0, translateX: 0, hasMoved: false });
+  const [topTranslateX, setTopTranslateX] = useState(0);
+  const [bottomTranslateX, setBottomTranslateX] = useState(0);
+  const topRowRef = useRef<HTMLDivElement>(null);
+  const bottomRowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -63,6 +69,62 @@ export default function Home() {
       document.removeEventListener("mouseover", handleMouseOver);
     };
   }, []);
+
+  // Drag handlers for top row
+  const handleTopMouseDown = (e: React.MouseEvent) => {
+    setIsDragging({ ...isDragging, top: true });
+    setDragStart({
+      x: e.clientX,
+      translateX: topTranslateX,
+      hasMoved: false,
+    });
+  };
+
+  const handleTopMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.top) return;
+    e.preventDefault();
+    const deltaX = e.clientX - dragStart.x;
+    if (Math.abs(deltaX) > 5) {
+      setDragStart(prev => ({ ...prev, hasMoved: true }));
+    }
+    setTopTranslateX(dragStart.translateX + deltaX * 2);
+  };
+
+  const handleTopMouseUp = (e: React.MouseEvent) => {
+    setIsDragging({ ...isDragging, top: false });
+    if (dragStart.hasMoved) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
+  // Drag handlers for bottom row
+  const handleBottomMouseDown = (e: React.MouseEvent) => {
+    setIsDragging({ ...isDragging, bottom: true });
+    setDragStart({
+      x: e.clientX,
+      translateX: bottomTranslateX,
+      hasMoved: false,
+    });
+  };
+
+  const handleBottomMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.bottom) return;
+    e.preventDefault();
+    const deltaX = e.clientX - dragStart.x;
+    if (Math.abs(deltaX) > 5) {
+      setDragStart(prev => ({ ...prev, hasMoved: true }));
+    }
+    setBottomTranslateX(dragStart.translateX + deltaX * 2);
+  };
+
+  const handleBottomMouseUp = (e: React.MouseEvent) => {
+    setIsDragging({ ...isDragging, bottom: false });
+    if (dragStart.hasMoved) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
 
   const handleGenerate = async () => {
     setIsLoading(true);
@@ -160,9 +222,17 @@ export default function Home() {
         <div className="pt-8 sm:pt-12 md:pt-16 pb-2 sm:pb-4 md:pb-8 h-screen flex flex-col">
           {/* Two Column Scrolling Gallery Container */}
           <div className="relative overflow-hidden flex-1 flex flex-col min-h-0">
-            {/* Top Row - Scrolls Left to Right */}
+            {/* Top Row - Scrolls Right to Left */}
             <div className="relative overflow-hidden flex-1 min-h-0">
-              <div className="flex animate-scroll-left h-full items-center">
+              <div 
+                className={`flex h-full items-center cursor-grab active:cursor-grabbing ${!isDragging.top ? 'animate-scroll-right' : ''}`}
+                ref={topRowRef}
+                onMouseDown={handleTopMouseDown}
+                onMouseMove={handleTopMouseMove}
+                onMouseUp={handleTopMouseUp}
+                onMouseLeave={handleTopMouseUp}
+                style={isDragging.top ? { transform: `translateX(${topTranslateX}px)` } : {}}
+              >
                 {/* First set of images */}
                 {wineLabels.map((label, index) => (
                   <motion.div
@@ -175,7 +245,11 @@ export default function Home() {
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
                     className="flex-shrink-0 w-[160px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
-                    onClick={() => setSelectedImage(label)}
+                    onClick={(e) => {
+                      if (!dragStart.hasMoved) {
+                        setSelectedImage(label);
+                      }
+                    }}
                   >
                     <div className="relative h-[140px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                       <Image
@@ -202,7 +276,11 @@ export default function Home() {
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
                     className="flex-shrink-0 w-[160px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
-                    onClick={() => setSelectedImage(label)}
+                    onClick={(e) => {
+                      if (!dragStart.hasMoved) {
+                        setSelectedImage(label);
+                      }
+                    }}
                   >
                     <div className="relative h-[140px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                       <Image
@@ -235,9 +313,17 @@ export default function Home() {
               </button>
             </motion.div>
 
-            {/* Bottom Row - Scrolls Right to Left (Reverse) */}
+            {/* Bottom Row - Scrolls Left to Right */}
             <div className="relative overflow-hidden flex-1 min-h-0">
-              <div className="flex animate-scroll-right h-full items-center">
+              <div 
+                className={`flex h-full items-center cursor-grab active:cursor-grabbing ${!isDragging.bottom ? 'animate-scroll-left' : ''}`}
+                ref={bottomRowRef}
+                onMouseDown={handleBottomMouseDown}
+                onMouseMove={handleBottomMouseMove}
+                onMouseUp={handleBottomMouseUp}
+                onMouseLeave={handleBottomMouseUp}
+                style={isDragging.bottom ? { transform: `translateX(${bottomTranslateX}px)` } : {}}
+              >
                 {/* First set of images */}
                 {wineLabels.map((label, index) => (
                   <motion.div
@@ -250,7 +336,11 @@ export default function Home() {
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
                     className="flex-shrink-0 w-[160px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
-                    onClick={() => setSelectedImage(label)}
+                    onClick={(e) => {
+                      if (!dragStart.hasMoved) {
+                        setSelectedImage(label);
+                      }
+                    }}
                   >
                     <div className="relative h-[140px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                       <Image
@@ -276,7 +366,11 @@ export default function Home() {
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
                     className="flex-shrink-0 w-[160px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
-                    onClick={() => setSelectedImage(label)}
+                    onClick={(e) => {
+                      if (!dragStart.hasMoved) {
+                        setSelectedImage(label);
+                      }
+                    }}
                   >
                     <div className="relative h-[140px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                       <Image

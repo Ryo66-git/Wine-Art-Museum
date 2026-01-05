@@ -28,16 +28,16 @@ body {
 
 @keyframes scroll-left {
   0% {
-    transform: translateX(0);
+    transform: translateX(-50%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(0);
   }
 }
 
 @keyframes scroll-right {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(50%);
   }
   100% {
     transform: translateX(0);
@@ -54,6 +54,11 @@ body {
   animation: scroll-right 60s linear infinite;
   display: flex;
   width: fit-content;
+}
+
+/* Hide scrollbar */
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
 }
 
 .animate-scroll-left:hover,

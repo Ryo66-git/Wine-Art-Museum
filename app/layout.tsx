@@ -19,7 +19,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Infinite Wine Museum",
+  title: "Wine Art Museum",
   description: "Curate your collection of artistic wine labels",
 };
 

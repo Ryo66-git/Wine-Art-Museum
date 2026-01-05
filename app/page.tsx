@@ -29,6 +29,41 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Custom cursor effect
+  useEffect(() => {
+    const cursor = document.querySelector(".custom-cursor") as HTMLElement;
+    if (!cursor) return;
+
+    const updateCursor = (e: MouseEvent) => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === "BUTTON" ||
+        target.tagName === "A" ||
+        target.closest("button") ||
+        target.closest("a") ||
+        target.classList.contains("cursor-pointer") ||
+        target.closest(".cursor-pointer")
+      ) {
+        cursor.classList.add("hover");
+      } else {
+        cursor.classList.remove("hover");
+      }
+    };
+
+    window.addEventListener("mousemove", updateCursor);
+    document.addEventListener("mouseover", handleMouseOver);
+
+    return () => {
+      window.removeEventListener("mousemove", updateCursor);
+      document.removeEventListener("mouseover", handleMouseOver);
+    };
+  }, []);
+
   const handleGenerate = async () => {
     setIsLoading(true);
     try {
@@ -76,6 +111,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#000000] text-white overflow-x-hidden">
+      {/* Custom Cursor */}
+      <div className="custom-cursor" />
       {/* Fixed Header - Fades on scroll */}
       <motion.header
         initial={{ opacity: 1, y: 0 }}

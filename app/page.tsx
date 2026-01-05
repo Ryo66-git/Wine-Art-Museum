@@ -86,8 +86,8 @@ export default function Home() {
         transition={{ duration: 0.3 }}
         className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-b from-black/95 via-black/80 to-transparent backdrop-blur-sm pointer-events-none"
       >
-        <div className="py-4 md:py-6 text-center pointer-events-auto">
-          <h1 className="text-3xl md:text-4xl font-serif tracking-wider text-white/95">
+        <div className="py-3 sm:py-4 md:py-6 text-center pointer-events-auto">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-wider text-white/95">
             Wine Art Museum
           </h1>
         </div>
@@ -120,9 +120,9 @@ export default function Home() {
 
       {/* Gallery - Horizontal Scrolling */}
       {wineLabels.length > 0 && (
-        <div className="pt-20 sm:pt-24 pb-4 sm:pb-8 h-screen flex flex-col">
+        <div className="pt-16 sm:pt-20 md:pt-24 pb-2 sm:pb-4 md:pb-8 h-screen flex flex-col">
           {/* Scrolling Gallery Container */}
-          <div className="relative overflow-hidden flex-1 flex items-center">
+          <div className="relative overflow-hidden flex-1 flex items-center min-h-0">
             <div className="flex animate-scroll">
               {/* First set of images */}
               {wineLabels.map((label, index) => (
@@ -135,10 +135,10 @@ export default function Home() {
                     delay: index * 0.1,
                     ease: [0.25, 0.1, 0.25, 1]
                   }}
-                  className="flex-shrink-0 w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] mx-1.5 sm:mx-2 md:mx-3 cursor-pointer group touch-manipulation"
+                  className="flex-shrink-0 w-[180px] sm:w-[250px] md:w-[300px] lg:w-[350px] mx-1.5 sm:mx-2 md:mx-3 cursor-pointer group touch-manipulation"
                   onClick={() => setSelectedImage(label)}
                 >
-                  <div className="relative h-[240px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                  <div className="relative h-[180px] sm:h-[280px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                     <Image
                       src={label.imageUrl}
                       alt={formatPrompt(label.prompt)}
@@ -167,10 +167,10 @@ export default function Home() {
                     delay: (wineLabels.length + index) * 0.1,
                     ease: [0.25, 0.1, 0.25, 1]
                   }}
-                  className="flex-shrink-0 w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] mx-1.5 sm:mx-2 md:mx-3 cursor-pointer group touch-manipulation"
+                  className="flex-shrink-0 w-[180px] sm:w-[250px] md:w-[300px] lg:w-[350px] mx-1.5 sm:mx-2 md:mx-3 cursor-pointer group touch-manipulation"
                   onClick={() => setSelectedImage(label)}
                 >
-                  <div className="relative h-[240px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                  <div className="relative h-[180px] sm:h-[280px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                     <Image
                       src={label.imageUrl}
                       alt={formatPrompt(label.prompt)}
@@ -195,12 +195,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex justify-center mt-3 sm:mt-4 mb-3 sm:mb-4 px-4"
+            className="flex justify-center mt-2 sm:mt-3 md:mt-4 mb-2 sm:mb-3 md:mb-4 px-4 flex-shrink-0"
           >
             <button
               onClick={handleGenerate}
               disabled={isLoading}
-              className="min-h-[44px] px-6 sm:px-8 py-3 sm:py-4 bg-white/5 active:bg-white/10 hover:bg-white/10 border border-white/10 hover:border-white/20 active:border-white/30 rounded-sm font-serif text-[11px] sm:text-xs md:text-sm tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
+              className="min-h-[40px] sm:min-h-[44px] px-5 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 bg-white/5 active:bg-white/10 hover:bg-white/10 border border-white/10 hover:border-white/20 active:border-white/30 rounded-sm font-serif text-[10px] sm:text-[11px] md:text-xs lg:text-sm tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
             >
               {isLoading ? "Curating..." : "Curate New Piece"}
             </button>

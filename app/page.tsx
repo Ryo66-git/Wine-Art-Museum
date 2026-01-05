@@ -120,25 +120,9 @@ export default function Home() {
 
       {/* Gallery - Two Column Reverse Scrolling */}
       {wineLabels.length > 0 && (
-        <div className="pt-12 sm:pt-16 md:pt-20 pb-2 sm:pb-4 md:pb-8 h-screen flex flex-col">
-          {/* Generate Button - Above Gallery */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex justify-center mb-2 sm:mb-3 md:mb-4 px-4 flex-shrink-0"
-          >
-            <button
-              onClick={handleGenerate}
-              disabled={isLoading}
-              className="min-h-[36px] sm:min-h-[40px] md:min-h-[44px] px-4 sm:px-5 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-3 lg:py-4 bg-white/5 active:bg-white/10 hover:bg-white/10 border border-white/10 hover:border-white/20 active:border-white/30 rounded-sm font-serif text-[9px] sm:text-[10px] md:text-[11px] lg:text-xs tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
-            >
-              {isLoading ? "Curating..." : "Curate New Piece"}
-            </button>
-          </motion.div>
-
+        <div className="pt-8 sm:pt-12 md:pt-16 pb-2 sm:pb-4 md:pb-8 h-screen flex flex-col">
           {/* Two Column Scrolling Gallery Container */}
-          <div className="relative overflow-hidden flex-1 flex flex-col gap-2 sm:gap-3 md:gap-4 min-h-0">
+          <div className="relative overflow-hidden flex-1 flex flex-col min-h-0">
             {/* Top Row - Scrolls Left to Right */}
             <div className="relative overflow-hidden flex-1 min-h-0">
               <div className="flex animate-scroll-left h-full items-center">
@@ -153,10 +137,10 @@ export default function Home() {
                       delay: index * 0.05,
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
-                    className="flex-shrink-0 w-[140px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
+                    className="flex-shrink-0 w-[160px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
                     onClick={() => setSelectedImage(label)}
                   >
-                    <div className="relative h-[120px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                    <div className="relative h-[140px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                       <Image
                         src={label.imageUrl}
                         alt={formatPrompt(label.prompt)}
@@ -180,10 +164,10 @@ export default function Home() {
                       delay: (wineLabels.length + index) * 0.05,
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
-                    className="flex-shrink-0 w-[140px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
+                    className="flex-shrink-0 w-[160px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
                     onClick={() => setSelectedImage(label)}
                   >
-                    <div className="relative h-[120px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                    <div className="relative h-[140px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                       <Image
                         src={label.imageUrl}
                         alt={formatPrompt(label.prompt)}
@@ -197,6 +181,22 @@ export default function Home() {
                 ))}
               </div>
             </div>
+
+            {/* Generate Button - Between Rows */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex justify-center my-2 sm:my-3 md:my-4 px-4 flex-shrink-0"
+            >
+              <button
+                onClick={handleGenerate}
+                disabled={isLoading}
+                className="min-h-[36px] sm:min-h-[40px] md:min-h-[44px] px-4 sm:px-5 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-3 lg:py-4 bg-white/5 active:bg-white/10 hover:bg-white/10 border border-white/10 hover:border-white/20 active:border-white/30 rounded-sm font-serif text-[9px] sm:text-[10px] md:text-[11px] lg:text-xs tracking-widest uppercase transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
+              >
+                {isLoading ? "Curating..." : "Curate New Piece"}
+              </button>
+            </motion.div>
 
             {/* Bottom Row - Scrolls Right to Left (Reverse) */}
             <div className="relative overflow-hidden flex-1 min-h-0">
@@ -212,10 +212,10 @@ export default function Home() {
                       delay: index * 0.05,
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
-                    className="flex-shrink-0 w-[140px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
+                    className="flex-shrink-0 w-[160px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
                     onClick={() => setSelectedImage(label)}
                   >
-                    <div className="relative h-[120px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                    <div className="relative h-[140px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                       <Image
                         src={label.imageUrl}
                         alt={formatPrompt(label.prompt)}
@@ -238,10 +238,10 @@ export default function Home() {
                       delay: (wineLabels.length + index) * 0.05,
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
-                    className="flex-shrink-0 w-[140px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
+                    className="flex-shrink-0 w-[160px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-1 sm:mx-1.5 md:mx-2 cursor-pointer group touch-manipulation"
                     onClick={() => setSelectedImage(label)}
                   >
-                    <div className="relative h-[120px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
+                    <div className="relative h-[140px] sm:h-[160px] md:h-[200px] lg:h-[260px] overflow-hidden bg-black/30 border border-white/5 group-hover:border-white/20 active:border-white/30 transition-all duration-500">
                       <Image
                         src={label.imageUrl}
                         alt={formatPrompt(label.prompt)}
@@ -337,7 +337,7 @@ export default function Home() {
                     {formatPrompt(selectedImage.prompt)}
                   </p>
                 </motion.div>
-              </div>
+        </div>
             </motion.div>
           </>
         )}
